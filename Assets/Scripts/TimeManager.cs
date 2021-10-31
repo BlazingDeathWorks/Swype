@@ -6,6 +6,7 @@ using System;
 
 public class TimeManager : MonoBehaviour
 {
+    public event Action OnTimerExitEvent;
     [SerializeField] StringLabelController timeLabel, modeLabel;
     [SerializeField] InputFieldChannel inputFieldChannel = null;
     private TMP_Text tmp_Text = null;
@@ -19,14 +20,14 @@ public class TimeManager : MonoBehaviour
             }
             catch(NullReferenceException e)
             {
-                Debug.Log(e.Message);
-                return 0;
+                Debug.LogError(e.Message);
+                return 1;
             }
         }
     }
     string Mode { get => modeLabel.Text; }
+    string TimeFormatted { get => $"{(int)time / SECONDS}:{ (int)time % SECONDS / 10}{(int)time % SECONDS % 10}"; }
     float time = 0;
-    string timeFormatted = null;
     bool canPlay = false;
     const string ENDLESS = "Endless";
     const int SECONDS = 60;
@@ -36,34 +37,38 @@ public class TimeManager : MonoBehaviour
         tmp_Text = GetComponentInChildren<TMP_Text>();
         inputFieldChannel.OnSelectEvent += OnSelect;
         inputFieldChannel.OnDeselectEvent += OnDeselect;
-        timeLabel.OnUpdateEvent += () => UpdateText();
-    }
-
-    private void Start()
-    {
-        UpdateText();
+        timeLabel.OnUpdateEvent += ResetText;
     }
 
     private void Update()
     {
         if (canPlay)
         {
-            //FormatTime();
+            FormatTime();
+            CheckTime();
             return;
+        }
+    }
+
+    private void CheckTime()
+    {
+        if(time <= 0)
+        {
+            OnTimerExitEvent?.Invoke();
+            ResetText();
         }
     }
 
     private void FormatTime()
     {
         time -= Time.deltaTime;
-        timeFormatted = $"{(int)time / SECONDS}:{Mathf.Abs(SECONDS - ((int)time / SECONDS))}{Mathf.Abs(SECONDS - ((int)time / SECONDS))}";
-        tmp_Text.text = timeFormatted;
+        tmp_Text.text = TimeFormatted;
     }
 
-    private void UpdateText()
+    private void ResetText()
     {
-        tmp_Text.text = InitialTime.ToString();
         time = InitialTime * SECONDS;
+        tmp_Text.text = TimeFormatted;
     }
 
     private void OnSelect(string text)
@@ -74,6 +79,7 @@ public class TimeManager : MonoBehaviour
     private void OnDeselect(string text)
     {
         canPlay = false;
+        ResetText();
     }
 
 }

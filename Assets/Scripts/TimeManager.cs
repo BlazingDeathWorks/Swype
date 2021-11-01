@@ -66,8 +66,8 @@ public class TimeManager : MonoBehaviour
         if(time <= 0)
         {
             AnalyticsManager.AddToDataCount();
-            OnTimerExitEvent?.Invoke(InitialTime);
             ResetText();
+            OnTimerExitEvent?.Invoke(InitialTime);
         }
     }
 

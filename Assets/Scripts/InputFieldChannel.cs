@@ -26,6 +26,7 @@ public class InputFieldChannel : MonoBehaviour
     public void OnDeselect(string text)
     {
         OnDeselectEvent?.Invoke(text);
+        inputField.text = "";
     }
 
     public void OnValueChange(string text)

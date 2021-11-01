@@ -7,11 +7,13 @@ public class TypeTabManager : MonoBehaviour
 {
     [SerializeField] Button[] buttons = null;
     [SerializeField] InputFieldChannel inputFieldChannel = null;
+    [SerializeField] TimeManager timeManager;
 
     private void Awake()
     {
         inputFieldChannel.OnSelectEvent += OnSelect;
         inputFieldChannel.OnDeselectEvent += OnDeselect;
+        timeManager.OnTimerExitEvent += OnTimerExit;
     }
 
     private void OnSelect(string text)
@@ -22,11 +24,17 @@ public class TypeTabManager : MonoBehaviour
         }
     }
 
-    private void OnDeselect(string text)
+    private void OnTimerExit(int initialTime)
     {
-        foreach(Button button in buttons)
+        foreach (Button button in buttons)
         {
+            if (button == null) continue;
             button.interactable = true;
         }
+    }
+
+    private void OnDeselect(string text)
+    {
+        OnTimerExit(0);
     }
 }

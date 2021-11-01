@@ -6,7 +6,7 @@ using System;
 
 public class TimeManager : MonoBehaviour
 {
-    public event Action OnTimerExitEvent;
+    public event Action<int> OnTimerExitEvent;
     [SerializeField] StringLabelController timeLabel, modeLabel;
     [SerializeField] InputFieldChannel inputFieldChannel = null;
     private TMP_Text tmp_Text = null;
@@ -38,6 +38,12 @@ public class TimeManager : MonoBehaviour
         inputFieldChannel.OnSelectEvent += OnSelect;
         inputFieldChannel.OnDeselectEvent += OnDeselect;
         timeLabel.OnUpdateEvent += ResetText;
+
+        #region RESET ANALYTICS
+        //Testing
+        /*AnalyticsManager.DataCount = 0;
+        AnalyticsManager.Average_WPM = 0;*/
+        #endregion
     }
 
     private void Update()
@@ -54,7 +60,8 @@ public class TimeManager : MonoBehaviour
     {
         if(time <= 0)
         {
-            OnTimerExitEvent?.Invoke();
+            AnalyticsManager.AddToDataCount();
+            OnTimerExitEvent?.Invoke(InitialTime);
             ResetText();
         }
     }
@@ -67,6 +74,7 @@ public class TimeManager : MonoBehaviour
 
     private void ResetText()
     {
+        canPlay = false;
         time = InitialTime * SECONDS;
         tmp_Text.text = TimeFormatted;
     }
@@ -78,7 +86,6 @@ public class TimeManager : MonoBehaviour
 
     private void OnDeselect(string text)
     {
-        canPlay = false;
         ResetText();
     }
 

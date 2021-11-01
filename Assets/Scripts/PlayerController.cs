@@ -23,7 +23,10 @@ public class PlayerController : MonoBehaviour
         {
             TransitionWords();
             ChangeActiveWord();
+            AnalyticsManager.AddToTotalWords();
+            return;
         }
+        AnalyticsManager.AddToTotalMisses();
     }
 
     private void ChangeActiveWord()

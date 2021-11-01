@@ -33,5 +33,28 @@ public class VocabDeleteController : MonoBehaviour
     {
         if (string.IsNullOrEmpty(text) || !canSubmit) return;
         WordManager.WordLibrary.Remove(text);
+        string[] textFile = File.ReadAllLines(WordManager.LibraryPath);
+        using (StreamReader sr = new StreamReader(WordManager.LibraryPath))
+        {
+            using (StreamWriter sw = new StreamWriter(WordManager.NewLibraryPath))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string line = sr.ReadLine();
+                    if (text == line)
+                    {
+                        continue;
+                    }
+                    sw.WriteLine(line);
+                }
+
+                if (File.Exists(WordManager.LibraryPath))
+                {
+                    File.Delete(WordManager.LibraryPath);
+                }
+                File.Move(WordManager.NewLibraryPath, WordManager.LibraryPath);
+                Debug.Log("Successfully Deleted");
+            }
+        }
     }
 }

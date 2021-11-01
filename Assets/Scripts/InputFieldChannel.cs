@@ -43,7 +43,7 @@ public class InputFieldChannel : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Return) || Input.GetKeyDown(KeyCode.Space))
         {
-            OnEnterEvent?.Invoke(inputField?.text);
+            OnEnterEvent?.Invoke(inputField?.text.TrimEnd(' '));
 
             #region Reset Input Field
             inputField.text = "";

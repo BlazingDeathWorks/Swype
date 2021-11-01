@@ -15,11 +15,15 @@ public class WordManager : MonoBehaviour
     {
         NewLibraryPath = Application.persistentDataPath + @"\NewLibrary.txt";
         LibraryPath = Application.persistentDataPath + LibraryFileName;
-        if(File.Exists(LibraryPath))
-        File.Delete(LibraryPath);
+        #region DELETE
+        /*if (File.Exists(LibraryPath))
+        {
+            File.Delete(LibraryPath);
+        }*/
+        #endregion
         if (!File.Exists(LibraryPath))
         {
-            File.Create(LibraryPath);
+            File.Create(LibraryPath).Dispose();
             string[] originTextFile = File.ReadAllLines(originPath);
             using (StreamWriter sw = new StreamWriter(LibraryPath))
             {
@@ -28,7 +32,6 @@ public class WordManager : MonoBehaviour
                     sw.WriteLine(text);
                 }
             }
-            Debug.Log("Create Successful");
         }
         ResetWordLibrary();
     }

@@ -13,10 +13,27 @@ public class VocabDeleteController : MonoBehaviour
     {
         inputFieldChannel.OnValueChangeEvent += OnValueChange;
         inputFieldChannel.OnEnterEvent += OnEnter;
+        inputFieldChannel.OnDeselectEvent += (text) => DeactiveFeedback();
+    }
+
+    private void OnEnable()
+    {
+        DeactiveFeedback();
+    }
+
+    private void DeactiveFeedback()
+    {
+        goodText.SetActive(false);
+        badText.SetActive(false);
     }
 
     private void OnValueChange(string text)
     {
+        if (string.IsNullOrEmpty(text))
+        {
+            DeactiveFeedback();
+            return;
+        }
         if (!WordManager.WordLibrary.Contains(text))
         {
             goodText.SetActive(false);
@@ -48,13 +65,15 @@ public class VocabDeleteController : MonoBehaviour
                     sw.WriteLine(line);
                 }
 
+                sw.Dispose();
+                sr.Dispose();
                 if (File.Exists(WordManager.LibraryPath))
                 {
                     File.Delete(WordManager.LibraryPath);
                 }
                 File.Move(WordManager.NewLibraryPath, WordManager.LibraryPath);
-                Debug.Log("Successfully Deleted");
             }
         }
+        DeactiveFeedback();
     }
 }

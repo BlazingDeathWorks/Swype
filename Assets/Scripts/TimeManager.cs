@@ -9,6 +9,7 @@ public class TimeManager : MonoBehaviour
     public event Action<int> OnTimerExitEvent;
     [SerializeField] StringLabelController timeLabel, modeLabel;
     [SerializeField] InputFieldChannel inputFieldChannel = null;
+    [SerializeField] bool resetAnalytics = false;
     private TMP_Text tmp_Text = null;
     int InitialTime
     {
@@ -40,9 +41,13 @@ public class TimeManager : MonoBehaviour
         timeLabel.OnUpdateEvent += ResetText;
 
         #region RESET ANALYTICS
-        //Testing
-        /*AnalyticsManager.DataCount = 0;
-        AnalyticsManager.Average_WPM = 0;*/
+        if (resetAnalytics)
+        {
+            AnalyticsManager.Previous_WPM = 0;
+            AnalyticsManager.Previous_Accuracy = 0;
+            AnalyticsManager.DataCount = 0;
+            AnalyticsManager.Average_WPM = 0;
+        }
         #endregion
     }
 

@@ -1856,6 +1856,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeManager: {fileID: 1668738721}
+  inputFieldChannel: {fileID: 1651618819}
   slider: {fileID: 589516088}
   label: {fileID: 926792334}
 --- !u!1 &564142729
@@ -3043,6 +3044,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeManager: {fileID: 1668738721}
+  inputFieldChannel: {fileID: 1651618819}
   slider: {fileID: 951249506}
   label: {fileID: 948445143}
 --- !u!1 &759800674
@@ -5859,6 +5861,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeManager: {fileID: 1668738721}
+  inputFieldChannel: {fileID: 1651618819}
   slider: {fileID: 1473032255}
   label: {fileID: 2063528014}
 --- !u!1 &1461833255

@@ -18,4 +18,9 @@ public class WPM_Analytics : AnalyticsBase
         label.text = $"{value} WPM";
         AnalyticsManager.Previous_WPM = value;
     }
+
+    protected override void OnSelect(string text)
+    {
+        AnalyticsManager.SetTotalWordsZero();
+    }
 }

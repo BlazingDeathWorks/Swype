@@ -6,10 +6,10 @@ using UnityEngine;
 public class WordManager : MonoBehaviour
 {
     public static List<string> WordLibrary { get; private set; }
-    private const string originPath = @"D:\Users\Game Dev Storage\Game Dev Games\Typing Competition App\Assets\Word Library" + "/Library.txt";
     public static string LibraryFileName { get; private set; } = "/Library.txt";
     public static string LibraryPath { get; private set; } = null;
     public static string NewLibraryPath { get; private set; } = null;
+    private const string originPath = @"D:\Users\Game Dev Storage\Game Dev Games\Typing Competition App\Assets\Word Library" + "/Library.txt";
 
     private void Awake()
     {

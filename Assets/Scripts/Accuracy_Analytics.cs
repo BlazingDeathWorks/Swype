@@ -19,4 +19,9 @@ public class Accuracy_Analytics : AnalyticsBase
         label.text = $"{value}% Accuracy";
         AnalyticsManager.Previous_Accuracy = value;
     }
+
+    protected override void OnSelect(string text)
+    {
+        AnalyticsManager.SetTotalMissesZero();
+    }
 }

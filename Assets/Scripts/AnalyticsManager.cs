@@ -25,9 +25,19 @@ public static class AnalyticsManager
         totalWords++;
     }
 
+    public static void SetTotalWordsZero()
+    {
+        totalWords = 0; 
+    }
+
     public static void AddToTotalMisses()
     {
         totalMisses++;
+    }
+
+    public static void SetTotalMissesZero()
+    {
+        totalMisses = 0;
     }
 
     public static void AddToDataCount()
